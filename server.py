@@ -11,6 +11,8 @@ from supports.database import User as UserModel
 from supports import date
 from supports.crypto import verify, make_hash
 from supports import secrets
+from supports import queue
+from supports import ml_connection as ml
 
 app = Flask(__name__)
 app.secret_key = secrets.flask_key
@@ -94,6 +96,7 @@ def login():
 @app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
+    print(current_user.id)
     transactions = Transactions.query.filter(Transactions.user_uuid == current_user.id).all()
     return render_template('transactions.html', transactions=transactions)
 
@@ -106,14 +109,16 @@ def logout():
 @app.route('/api/addTransaction', methods=['POST'])
 def add_transaction():
     data = request.get_json(force=True)
-    print(data)
+    store_name, location = date.sep_store_location(data.get('details'))
     new_transaction = Transactions(
         date_of_transction=date.convert_string_to_date(
             data.get('date_of_transaction')),
         amount=data.get('amount'),
         details=data.get('details'),
         uuid=str(uuid4()),
-        user_uuid=data.get('user_uuid')
+        user_uuid=data.get('user_uuid'),
+        location=location,
+        store_name=store_name
     )
 
     db.session.add(new_transaction)
@@ -122,6 +127,13 @@ def add_transaction():
     return json.dumps({
         'status': 'Success!'
     })
+
+@app.route('/initPredict', methods=['POST'])
+def init_predict():
+    data = request.get_json(force=True)
+    uid = data.get('user_uuid')
+    print("Running an initial training session.")
+    ml.initial_train(uid)
 
 @app.route('/')
 def index():
