@@ -11,3 +11,4 @@ The backend system for our ECHacks project
 ## Usage
 
 ```python3 main.py```
+memes
