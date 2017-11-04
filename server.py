@@ -1,4 +1,5 @@
 import os
+import json
 from uuid import uuid4
 
 from flask import Flask, render_template, flash, request, redirect
@@ -6,6 +7,7 @@ from flask_login import LoginManager, login_required
 from flask_sqlalchemy import SQLAlchemy
 from supports.database import db, Transactions, User
 
+from supports import date
 from supports.crypto import verify, make_hash
 
 app = Flask(__name__)
@@ -16,10 +18,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 db.init_app(app)
 login_manager.init_app(app)
 
-# db = SQLAlchemy()
-def create_app():
-    db.init_app(app)
-    return app
 
 
 def find_user(email):
@@ -90,17 +88,26 @@ def logout():
 
 @app.route('/api/addTransaction', methods=['POST'])
 def add_transaction():
-    data = request.get_json()
+    data = request.get_json(force=True)
     new_transaction = Transactions(
-        date_of_transaction=data.get('date_of_transaction')
-        amount=data.get('amount')
-        details=data.get('details')
-        uuid=str(uuid4())
+        date_of_transction=date.convert_string_to_date(
+            data.get('date_of_transaction')),
+        amount=data.get('amount'),
+        details=data.get('details'),
+        uuid=str(uuid4()),
         user_uuid=data.get('user_uuid')
     )
 
     db.session.add(new_transaction)
     db.session.commit()
+
+    return json.dumps({
+        'status': 'Success!'
+    })
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(
