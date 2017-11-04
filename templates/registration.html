@@ -5,9 +5,8 @@
 
 .registration-page {
   width: 720px;
-  padding: 80% 0 0;
+  padding: 5% 0 0;
   margin: auto;
-  max-height: 0px;
 }
 .form {
   position: relative;
@@ -105,12 +104,17 @@ body {
 </style>
 <body>
 
+<div class="image" align="center">
+    <br>
+    <img src="phishnet.png" style="width:400px">    
+</div>	
+
 <div class="registration-page">
   <div class="form">
-    <form class="registration-form">
-      <input type="text" placeholder="Email"/>
+    <form class="registration-form" method="POST" action="/register">
+      <input type="text" placeholder="Email" name="email"/>
       <input type="text" placeholder="Full Name"/>
-      <input type="text" placeholder="Password"/>
+      <input type="text" placeholder="Password" name="password"/>
       <button>REGISTER</button>
     </form>
   </div>

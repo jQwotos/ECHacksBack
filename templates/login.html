@@ -5,9 +5,8 @@
 
 .login-page {
   width: 720px;
-  padding: 80% 0 0;
+  padding: 5% 0 0;
   margin: auto;
-  max-height: 0px;
 }
 .form {
   position: relative;
@@ -102,12 +101,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 </style>
 <body>
 
+<div class="image" align="center">
+    <br>
+    <img src="phishnet.png" style="width:400px">    
+</div>
+
 <div class="login-page">
   <div class="form">
-    <!--Remove if necessary-->
     <form class="register-form">
       <input type="text" placeholder="name"/>
       <input type="password" placeholder="password"/>
@@ -115,9 +119,9 @@ body {
       <button>create</button>
       <p class="message">Already registered? <a href="#">Sign In</a></p>
     </form>
-    <form class="login-form">
-      <input type="text" placeholder="Email"/>
-      <input type="password" placeholder="Password"/>
+    <form class="login-form" action="/login" method="POST">
+      <input type="text" placeholder="Email" name="email"/>
+      <input type="password" placeholder="Password" name="password"/>
       <button>login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>

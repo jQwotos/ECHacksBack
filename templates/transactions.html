@@ -10,13 +10,11 @@
     body {
       margin: 0;
     }
-
     /* Add a background/text color to the top navigation bar */
     .topnav {
       overflow: hidden;
       background-color: #008a00;
     }
-
     /* Style the links inside the navigation bar */
     .topnav a {
       float: left;
@@ -27,17 +25,14 @@
       text-decoration: none;
       font-size: 17px;
     }
-
     /* Change the navigation bar buttons when you hover over them */
     .topnav a:hover {
       background-color: #007c16;
       color: white;
     }
-
     .topnav .icon {
       display: none;
     }
-
     @media screen and (max-width: 600px) {
       .topnav a:not(:first-child) {display: none;}
       .topnav a.icon {
@@ -65,30 +60,33 @@
       font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
       border-collapse: collapse;
       width: 100%;
-	}
-
-	#customers td, #customers th {
+  }
+  #customers td, #customers th {
       border: 1px solid #ddd;
       padding: 8px;
-	}
-
-	#customers tr:nth-child(even){background-color: #f2f2f2;}
-
-	#customers tr:hover {background-color: #ddd;}
-
-	#customers th {
+  }
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  #customers tr:hover {background-color: #ddd;}
+  #customers th {
       padding-top: 12px;
       padding-bottom: 12px;
       text-align: left;
       background-color: #4CAF50;
       color: white;
-	}
+  }
+body {
+
+}
 
     /* Set black background color, white text and some padding */
     footer {
       background-color: #333333;
       color: white;
-      padding: 2px;
+      position:absolute;
+      bottom: 0;
+      padding: 5px;
+      width: 100%;
+      height: 5%;   /* Height of the footer */
     }
 
   </style>
@@ -102,7 +100,7 @@
     <a href="#investing">Investing</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
-    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a> 
   </div>
 
   <table id="customers">
@@ -111,30 +109,18 @@
     <th>Details</th>
     <th>Amount</th>
   </tr>
+  {% for t in transactions %}
   <tr>
-    <td>Nov 2, 2017</td>
-    <td>Amigo Door Stittsville, ON</td>
-    <td>502.85</td>
+    <td>{{t.date_of_transction}}</td>
+    <td>{{t.details}}</td>
+    <td>{{t.amount}}</td>
   </tr>
-  <tr>
-    <td>Oct 22, 2017</td>
-    <td>Bouclair Nepean, ON</td>
-    <td>180.78</td>
-  </tr>
-  <tr>
-    <td>Oct 17, 2017</td>
-    <td>Carleton Sport Therapy Ottawa, ON</td>
-    <td>85.00</td>
-  </tr>
-  
+  {% endfor %}
 </table>
 
 <footer class="container-fluid">
-  <p>Copyright © 2017 Fraud Finder</p>
-  <a href="https://www.linkedin.com/in/jqwotos/"><font size="0.1">Jason</font></a> 
-  <a href="https://www.linkedin.com/in/kanghaichen/"><font size="0.1">Kang</font></a>
-  <a href="https://www.linkedin.com/in/racheliu/"><font size="0.1">Rachel</font></a>
-  <a href="https://www.linkedin.com/in/nemzutkovic/"><font size="0.1">Nem</font></a>
+  
+  <p>Copyright © 2017<img src="phishnet.png" style="width:50px" hspace="5px"> </p> 
 </footer>
 
 <script>
