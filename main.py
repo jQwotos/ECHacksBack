@@ -22,22 +22,29 @@ class User(db.Model):
     email = db.Column(db.String, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
 
-
-@app.route('/', methods = ['PUT']) # If the server makes a request to the base url of '/'
-def main():
-    if request.is_json: # Checks that the data is in json format
-        content = request.get_json() # Retrieves the json content form the request
-        print(content) # Just to show you want json content looks like
-    return json.dumps({
-        'status': 'Success!'
-    }) # Returns data back to the other server making the request
-
-
-@app.route('/viewTransactions', methods = ['POST'])
-def view_transactions():
+@app.route('/product', methods=['POST'])
+def createTransaction():
     if request.is_json:
-        content = request.get_json()
-        print(content)
+    # fetch user and transaction from the request
+        user = request.get_json()["user"]
+        transaction = request.get_json()["transaction"]
+        print(user)
+        print(transaction)
+        row = row(user=user, transaction=transaction) #prepare query statement
+
+    curr_session = mysql.session #open database session
+    try:
+        curr_session.add(row) #add prepared statement to opened session
+        curr_session.commit() #commit changes
+    except:
+        curr_session.rollback()
+        curr_session.flush() # for resetting non-commited .add()
+
+    userID = user.id #fetch last inserted id
+    data = Products.query.filter_by(id=userId).first() #fetch our inserted product
+    config.read('rating_db.conf')
+    result = [data.name, data.rate] #prepare visual data
+    return jsonify(session=result)
     return json.dumps({
         'status': 'Success!'
     })
