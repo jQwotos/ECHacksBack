@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
   <style>
     body {
       margin: 0;
@@ -53,7 +52,7 @@
       position: absolute;
       right: 0;
       top: 0;
-      }
+    }
 
     .topnav.responsive a {
       float: none;
@@ -61,26 +60,35 @@
       text-align: left;
       }
     }
-  
-    /* Set gray background color and 100% height */
-    .sidenav {
-      background-color: #f5ffe6;
-      height: 100%;
-    }
 
-    /* Add a color to the top row of the table */
-    .tabletop {
-      background-color: #f4f4f4;
-      padding: 10px;
-      color: #008a00;
-      overflow: hidden
-    }
+    #customers {
+      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+	}
+
+	#customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+	}
+
+	#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+	#customers tr:hover {background-color: #ddd;}
+
+	#customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #4CAF50;
+      color: white;
+	}
 
     /* Set black background color, white text and some padding */
     footer {
       background-color: #333333;
       color: white;
-      padding: 15px;
+      padding: 2px;
     }
 
   </style>
@@ -97,42 +105,28 @@
     <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
   </div>
 
-  <br>
-
-  <div class="mainrow">
-      <div class="tabletop" align="center">
-        <div class="col-sm-1"><strong>Date of Transaction</strong></div>
-        <div class="col-sm-1"><strong>Details</strong></div>
-        <div class="col-sm-1"><strong>Amount</strong></div>
-      </div>
-  </div>
-
-  <br>
-
-  <div class="xrows">
-    <div class="1" align="center">
-        <div class="col-sm-4">Nov 2, 2017</div>
-        <div class="col-sm-4">Amigo Door Stittsville, ON</div>
-        <div class="col-sm-4">502.85</div>
-      </div>
-      <br>
-      <br>
-      <div class="2" align="center">
-        <div class="col-sm-4">Oct 22, 2017</div>
-        <div class="col-sm-4">Bouclair Nepean, ON</div>
-        <div class="col-sm-4">180.78</div>
-      </div>
-      <br>
-      <br>
-      <div class="3" align="center">
-        <div class="col-sm-4">Oct 2, 2017</div>
-        <div class="col-sm-4">Carleton Sport Therapy Ottawa, ON</div>
-        <div class="col-sm-4">85.00</div>
-      </div>
-    </div>
-
-    <br>
-    <br>
+  <table id="customers">
+  <tr>
+    <th>Transaction Date</th>
+    <th>Details</th>
+    <th>Amount</th>
+  </tr>
+  <tr>
+    <td>Nov 2, 2017</td>
+    <td>Amigo Door Stittsville, ON</td>
+    <td>502.85</td>
+  </tr>
+  <tr>
+    <td>Oct 22, 2017</td>
+    <td>Bouclair Nepean, ON</td>
+    <td>180.78</td>
+  </tr>
+  <tr>
+    <td>Oct 17, 2017</td>
+    <td>Carleton Sport Therapy Ottawa, ON</td>
+    <td>85.00</td>
+  </tr>
+</table>
 
 <footer class="container-fluid">
   <p>Copyright © 2017 Fraud Finder</p>
@@ -155,4 +149,4 @@ function myFunction() {
 </script>
 
 </body>
-</html>
+</html> 
