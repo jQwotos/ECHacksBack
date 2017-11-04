@@ -111,26 +111,18 @@
     <th>Details</th>
     <th>Amount</th>
   </tr>
+  {% for t in transactions %}
   <tr>
-    <td>Nov 2, 2017</td>
-    <td>Amigo Door Stittsville, ON</td>
-    <td>502.85</td>
+    <td>{{t.date_of_transction}}</td>
+    <td>{{t.details}}</td>
+    <td>{{t.amount}}</td>
   </tr>
-  <tr>
-    <td>Oct 22, 2017</td>
-    <td>Bouclair Nepean, ON</td>
-    <td>180.78</td>
-  </tr>
-  <tr>
-    <td>Oct 17, 2017</td>
-    <td>Carleton Sport Therapy Ottawa, ON</td>
-    <td>85.00</td>
-  </tr>
+  {% endfor %}
 </table>
 
 <footer class="container-fluid">
   <p>Copyright © 2017 Fraud Finder</p>
-  <a href="https://www.linkedin.com/in/jqwotos/"><font size="0.1">Jason</font></a> 
+  <a href="https://www.linkedin.com/in/jqwotos/"><font size="0.1">Jason</font></a>
   <a href="https://www.linkedin.com/in/kanghaichen/"><font size="0.1">Kang</font></a>
   <a href="https://www.linkedin.com/in/racheliu/"><font size="0.1">Rachel</font></a>
   <a href="https://www.linkedin.com/in/nemzutkovic/"><font size="0.1">Nem</font></a>
@@ -149,4 +141,4 @@ function myFunction() {
 </script>
 
 </body>
-</html> 
+</html>
