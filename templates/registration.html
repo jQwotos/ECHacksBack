@@ -107,10 +107,10 @@ body {
 
 <div class="registration-page">
   <div class="form">
-    <form class="registration-form">
-      <input type="text" placeholder="Email"/>
+    <form class="registration-form" method="POST" action="/register">
+      <input type="text" placeholder="Email" name="email"/>
       <input type="text" placeholder="Full Name"/>
-      <input type="text" placeholder="Password"/>
+      <input type="text" placeholder="Password" name="password"/>
       <button>REGISTER</button>
     </form>
   </div>

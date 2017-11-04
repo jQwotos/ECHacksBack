@@ -3,14 +3,17 @@ import json
 from uuid import uuid4
 
 from flask import Flask, render_template, flash, request, redirect
-from flask_login import LoginManager, login_required
+from flask_login import LoginManager, login_required, login_user, current_user, UserMixin
 from flask_sqlalchemy import SQLAlchemy
-from supports.database import db, Transactions, User
+from supports.database import db, Transactions
+from supports.database import User as UserModel
 
 from supports import date
 from supports.crypto import verify, make_hash
+from supports import secrets
 
 app = Flask(__name__)
+app.secret_key = secrets.flask_key
 
 login_manager = LoginManager()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
@@ -20,37 +23,49 @@ login_manager.init_app(app)
 
 
 
+class User(UserMixin):
+    def __init__(self, uid):
+        self.id = uid
+
+
 def find_user(email):
-    user = User.query.filter_by(email=email).first()
+    user = UserModel.query.filter_by(email=email).first()
     return user if user is not None else None
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    if find_user(email) is None:
-        new_user = User(
-            user_uuid=str(uuid4()),
-            email=email,
-            password_hash = make_hash(password))
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect('/dashboard')
-    else:
-        flash("Email is already registered.")
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        if find_user(email) is None:
+            new_user = UserModel(
+                user_uuid=str(uuid4()),
+                email=email,
+                password_hash=make_hash(password))
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect('/login')
+        else:
+            flash("Email is already registered.")
+
+    if request.method == 'GET':
+        return render_template('registration.html')
 
 
 @login_manager.user_loader
-def user_loader(email):
-    return find_user(email)
+def user_loader(userid):
+    return User(userid)
 
 @login_manager.request_loader
 def request_loader(request):
     email = request.form.get('email')
-    user = find_user(email)
-
-    if user is None: return None
+    user_details = find_user(email)
+    if user_details is None:
+        return None
+    id = user_details.uuid
+    user = User(id)
+    user.id = user_details.uuid
 
     user.is_authenticated = verify(
         request.form.get('password'), user.password_hash
@@ -66,19 +81,21 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
-        user = find_user(email)
-        if user is not None and verify(password, user.password_hash):
-            flask_login.login_user(user)
-            return flask.redirect('/dashboard')
+        user_details = find_user(email)
+        if user_details is not None and verify(password, user_details.password_hash):
+            id = user_details.user_uuid
+            user = User(id)
+            user.id = user_details.user_uuid
+            login_user(user)
+            return redirect('/dashboard')
 
-    flash('Incorrect username or password.')
+        return redirect('/login')
 
 @app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
-    user = flask_login.current_user.uuid
-    transactions = User.query.filter_by(user_uuid=user.uuid).all()
-    return render_template('dashboard.html', transactions=transactions)
+    transactions = Transactions.query.filter(Transactions.user_uuid == current_user.id).all()
+    return render_template('transactions.html', transactions=transactions)
 
 @app.route('/logout')
 @login_required
@@ -89,6 +106,7 @@ def logout():
 @app.route('/api/addTransaction', methods=['POST'])
 def add_transaction():
     data = request.get_json(force=True)
+    print(data)
     new_transaction = Transactions(
         date_of_transction=date.convert_string_to_date(
             data.get('date_of_transaction')),
@@ -108,7 +126,11 @@ def add_transaction():
 @app.route('/')
 def index():
     return render_template('index.html')
-
+'''
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html')
+'''
 if __name__ == "__main__":
     app.run(
         host='0.0.0.0',
