@@ -110,12 +110,13 @@ def logout():
 def add_transaction():
     data = request.get_json(force=True)
     store_name, location = date.sep_store_location(data.get('details'))
+    uid = str(uuid4())
     new_transaction = Transactions(
         date_of_transction=date.convert_string_to_date(
             data.get('date_of_transaction')),
         amount=data.get('amount'),
         details=data.get('details'),
-        uuid=str(uuid4()),
+        uuid=uid,
         user_uuid=data.get('user_uuid'),
         location=location,
         store_name=store_name
@@ -123,6 +124,8 @@ def add_transaction():
 
     db.session.add(new_transaction)
     db.session.commit()
+
+    print(ml.predict(uid))
 
     return json.dumps({
         'status': 'Success!'
@@ -132,12 +135,17 @@ def add_transaction():
 def init_predict():
     data = request.get_json(force=True)
     uid = data.get('user_uuid')
-    print("Running an initial training session.")
-    ml.initial_train(uid)
+    output = ml.initial_train(uid)
+    for item in output:
+        print(item)
+    return json.dumps({
+        'status': 'Success!'
+    })
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 '''
 @app.errorhandler(404)
 def page_not_found(e):
