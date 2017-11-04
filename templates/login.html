@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style>
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 20px 15%;
+  background-color: #008a00;
+}
+form > div {
+  clear: both;
+  overflow: hidden;
+  padding: 1px;
+  margin: 0 0 5px 0;
+}
+form > div > div > div {
+  margin: 0 0 5px 0;
+}
+form > div > label,
+legend {
+  width: 25%;
+  float: left;
+  padding-right: 10px;
+  padding-top: 2px;
+}
+form > div > div,
+form > div > div {
+  width: 75%;
+  float: right;
+}
+form > div > label {
+  font-size: 90%;
+}
+
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=password],
+textarea {
+  width: 80%;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=password] {
+  width: 50%;
+}
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=password]:focus,
+textarea:focus {
+  outline: 0;
+  border-color: #4697e4;
+}
+
+@media (max-width: 600px) {
+  form > div {
+    margin: 0 0 15px 0; 
+  }
+  form > div > label,
+  legend {
+    width: 100%;
+    float: none;
+    margin: 0 0 5px 0;
+  }
+  form > div > div,
+  form > div > fieldset > div {
+    width: 100%;
+    float: none;
+  }
+  input[type=text],
+  input[type=email],
+  input[type=url],
+  input[type=password],
+  textarea,
+  select {
+    width: 100%; 
+  }
+}
+@media (min-width: 1200px) {
+  form > div > label,
+  legend {
+    text-align: right;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+<div style="max-width: 500px; margin: 250px auto 0 auto;">
+
+<form action="#">
+  
+  <div>
+    <label class="desc" id="title1" for="Field1"><font color="black">EMAIL</font></label>
+    <div>
+      <input id="Field1" name="Field1" type="text" class="field text fn" value="" size="6" tabindex="1">
+    </div>
+  </div>
+    
+  <div>
+    <label class="desc" id="title3" for="Field3"><font color="black">PASSWORD</font></label>
+    <div>
+      <input id="Field3" name="Field3" type="email" spellcheck="false" value="" maxlength="255" tabindex="3"> 
+   </div>
+  </div>
+  
+  <div>
+    <div>
+      <input id="saveForm" name="saveForm" type="submit" value="SUBMIT">
+    </div>
+  </div>
+  
+</form>
+
+</div>
+</body>
+</html>
