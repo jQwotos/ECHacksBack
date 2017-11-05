@@ -11,9 +11,9 @@ api_key = '6cc8f23c-ed6b-400c-aff8-24350495b839'
 def submit():
     data = {
         'date_of_transaction': 'Jul 2, 2018',
-        'amount': '100000',
+        'amount': '500',
         'user_uuid': user_uuid,
-        'details': 'Tesla Lethbridge, AB',
+        'details': 'Apple Ottawa, ON',
         'train': True,
         'api_key': api_key
     }
