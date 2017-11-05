@@ -6,7 +6,7 @@ from sklearn.ensemble import IsolationForest
 
 def train_model(datapoints, user_id):
     num_samples = 100
-    outliers_frac = .25
+    outliers_frac = .01
     classifier = IsolationForest(
         max_samples=num_samples,
         contamination=outliers_frac

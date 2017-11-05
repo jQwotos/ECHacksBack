@@ -5,9 +5,9 @@
 
 .registration-page {
   width: 720px;
-  padding: 80% 0 0;
+  padding: 5% 0 0;
+  padding-top: 330px;
   margin: auto;
-  max-height: 0px;
 }
 .form {
   position: relative;
@@ -101,8 +101,17 @@ body {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: 300px;
+  padding-bottom: 0;
 }
+
 </style>
+
+<div class="image" align="center">
+    <br>
+    <img src="{{ url_for('static', filename='img/phishnet.png') }}" style="width:500px">
+</div>
+
 <body>
 
 <div class="registration-page">
@@ -110,7 +119,7 @@ body {
     <form class="registration-form" method="POST" action="/register">
       <input type="text" placeholder="Email" name="email"/>
       <input type="text" placeholder="Full Name"/>
-      <input type="text" placeholder="Password" name="password"/>
+      <input type="password" placeholder="Password" name="password"/>
       <button>REGISTER</button>
     </form>
   </div>

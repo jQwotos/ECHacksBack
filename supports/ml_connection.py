@@ -1,7 +1,10 @@
+import logging
+
 import pandas as pd
 
 from ml import outlier, supervised
 from supports.database import Transactions
+from supports import sendgrid_api
 # import matplotlib.pyplot as plt
 
 from server import db
@@ -68,22 +71,30 @@ def initial_train(user_uuid):
 '''
 def initial_train(user_uuid):
     transactions = Transactions.query.filter(Transactions.user_uuid == user_uuid).all()
+    cache = transactions
     locations = []
     stores = []
-    for t in range(len(transactions)):
-        if transactions[t].location not in locations:
-            transactions[t].location = len(locations)
-            locations.append(transactions[t].location)
+    for t in range(len(cache)):
+        if cache[t].location not in locations:
+            cache[t].location = len(locations)
+            locations.append(cache[t].location)
         else:
-            transactions[t].location = locations.index(transactions[t].location)
-        if transactions[t].store_name not in stores:
-            transactions[t].store_name = len(stores)
-            stores.append(transactions[t].store_name)
+            cache[t].location = locations.index(cache[t].location)
+        if cache[t].store_name not in stores:
+            cache[t].store_name = len(stores)
+            stores.append(cache[t].store_name)
         else:
-            transactions[t].store_name = stores.index(transactions[t].store_name)
-        df = transaction_to_df(transactions)
-    print(df)
+            cache[t].store_name = stores.index(cache[t].store_name)
+    df = transaction_to_df(cache)
     outlier.train_model(df, user_uuid)
-    return [
+    for x in range(len(transactions)):
+        if outlier.predict(transaction_to_df([cache[x]]), user_uuid)[0] == -1:
+            if transactions[x].fraud is None:
+                transactions[x].fraud = True
+                sendgrid_api.report(transactions[x])
+                db.session.commit()
+    '''
+    predictions = [
         outlier.predict(transaction_to_df([x]), user_uuid) for x in transactions
     ]
+    '''

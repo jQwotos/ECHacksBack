@@ -16,7 +16,6 @@
       overflow: hidden;
       background-color: #008a00;
     }
-
     /* Style the links inside the navigation bar */
     .topnav a {
       float: left;
@@ -33,7 +32,9 @@
       background-color: #007c16;
       color: white;
     }
-
+    .topnav .icon {
+      display: none;
+    }
     .topnav .icon {
       display: none;
     }
@@ -65,7 +66,24 @@
       font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
       border-collapse: collapse;
       width: 100%;
-	}
+    }
+
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 0px;
+      text-align: center;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    #customers tr:hover {background-color: #ddd;}
+    #customers th {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+      width: 33%;
+    }
 
 	#customers td, #customers th {
       border: 1px solid #ddd;
@@ -79,7 +97,7 @@
 	#customers th {
       padding-top: 12px;
       padding-bottom: 12px;
-      text-align: left;
+      text-align: center;
       background-color: #4CAF50;
       color: white;
 	}
@@ -88,9 +106,15 @@
     footer {
       background-color: #333333;
       color: white;
-      padding: 2px;
+      bottom: 0;
+      width: 100%;
+      padding: 6px;
+      height: 35px;   /* Height of the footer */
     }
 
+    .red-back {
+      background-color: #FF0000 !important
+    }
   </style>
 </head>
 
@@ -112,21 +136,13 @@
     <th>Amount</th>
   </tr>
   {% for t in transactions %}
-  <tr>
+  <tr {% if t.fraud %}class="red-back"{% endif %}>
     <td>{{t.date_of_transction}}</td>
     <td>{{t.details}}</td>
-    <td>{{t.amount}}</td>
+    <td>${{t.amount}}</td>
   </tr>
   {% endfor %}
-</table>
-
-<footer class="container-fluid">
-  <p>Copyright © 2017 Fraud Finder</p>
-  <a href="https://www.linkedin.com/in/jqwotos/"><font size="0.1">Jason</font></a>
-  <a href="https://www.linkedin.com/in/kanghaichen/"><font size="0.1">Kang</font></a>
-  <a href="https://www.linkedin.com/in/racheliu/"><font size="0.1">Rachel</font></a>
-  <a href="https://www.linkedin.com/in/nemzutkovic/"><font size="0.1">Nem</font></a>
-</footer>
+  </table>
 
 <script>
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
@@ -139,6 +155,10 @@ function myFunction() {
     }
 }
 </script>
-
 </body>
+
+<footer class="container-fluid">
+  <p>Copyright © 2017<img src="phishnet.png" style="width:50px" hspace="5px"> </p>
+</footer>
+
 </html>

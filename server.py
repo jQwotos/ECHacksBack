@@ -29,7 +29,6 @@ class User(UserMixin):
     def __init__(self, uid):
         self.id = uid
 
-
 def find_user(email):
     user = UserModel.query.filter_by(email=email).first()
     return user if user is not None else None
@@ -125,7 +124,7 @@ def add_transaction():
     db.session.add(new_transaction)
     db.session.commit()
 
-    print(ml.predict(uid))
+    # print(ml.predict(uid))
 
     return json.dumps({
         'status': 'Success!'
@@ -135,9 +134,8 @@ def add_transaction():
 def init_predict():
     data = request.get_json(force=True)
     uid = data.get('user_uuid')
-    output = ml.initial_train(uid)
-    for item in output:
-        print(item)
+    # output = queue.queue_initial_train(uid)
+    ml.initial_train(uid)
     return json.dumps({
         'status': 'Success!'
     })
