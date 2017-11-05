@@ -3,7 +3,9 @@ import logging
 import pandas as pd
 
 from ml import outlier, supervised
-from supports.database import Transactions
+from supports.database import Transactions, User
+from supports.maps_api import get_distance
+from supports import twil
 # from supports import sendgrid_api
 # import matplotlib.pyplot as plt
 
@@ -71,6 +73,7 @@ def initial_train(user_uuid):
 '''
 def initial_train(user_uuid):
     transactions = Transactions.query.filter(Transactions.user_uuid == user_uuid).all()
+    user = User.query.filter(User.user_uuid == user_uuid).first()
     cache = transactions
     locations = []
     stores = []
@@ -91,7 +94,10 @@ def initial_train(user_uuid):
         if outlier.predict(transaction_to_df([cache[x]]), user_uuid)[0] == -1:
             if transactions[x].fraud is None:
                 transactions[x].fraud = True
-                # sendgrid_api.report(transactions[x])
+                print("Sending out a notice via twillio to %s" % (user.phone))
+                twil.notice('''
+                    Warning! There was a possible fraudulant transaction detected on your account!
+                ''', user.phone)
                 db.session.commit()
     '''
     predictions = [
