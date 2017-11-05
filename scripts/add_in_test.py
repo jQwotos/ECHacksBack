@@ -1,8 +1,8 @@
 import requests
 
 from user import uid as user_uuid
+from user import BASE_URL
 
-BASE_URL = 'http://127.0.0.1'
 INSERT_URL = '%s/api/addTransaction' % BASE_URL
 
 # user_uuid = '36fe18b8-9795-40ac-94e5-63a88c838b63'

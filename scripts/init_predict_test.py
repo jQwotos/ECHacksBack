@@ -1,7 +1,7 @@
 import requests
 from user import uid as user_uuid
+from user import BASE_URL
 
-BASE_URL = 'http://127.0.0.1'
 INIT_PREDICT_URL = "%s/initPredict" % BASE_URL
 
 def test_init_predict():
