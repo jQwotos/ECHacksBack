@@ -3,7 +3,7 @@ import json
 from uuid import uuid4
 
 from flask import Flask, render_template, flash, request, redirect
-from flask_login import LoginManager, login_required, login_user, current_user, UserMixin
+from flask_login import LoginManager, login_required, login_user, current_user, UserMixin, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from supports.database import db, Transactions
 from supports.database import User as UserModel
@@ -47,7 +47,7 @@ def register():
                 phone=request.form.get('phone'))
             db.session.add(new_user)
             db.session.commit()
-            return redirect('/login')
+            return redirect('/')
         else:
             flash("Email is already registered.")
 
@@ -75,7 +75,7 @@ def request_loader(request):
 
     return user
 
-
+@app.route('/login', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -91,7 +91,7 @@ def login():
             login_user(user)
             return redirect('/dashboard')
 
-        return redirect('/login')
+        return redirect('/')
 
 @app.route('/dashboard', methods=['GET'])
 @login_required

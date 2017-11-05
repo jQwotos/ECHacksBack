@@ -109,21 +109,14 @@ body {
 
 <div class="image" align="center">
     <br>
-    <img src="/static/img/phishnet.png" style="width: 500px">    
+    <img src="/static/img/phishnet.png" style="width: 500px">
 </div>
 
 <body>
 
 <div class="login-page">
   <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form" action="/login" method="POST">
+    <form class="login-form" action="/" method="POST">
       <input type="text" placeholder="Email" name="email"/>
       <input type="password" placeholder="Password" name="password"/>
       <button>login</button>
