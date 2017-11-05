@@ -22,6 +22,7 @@ class User(db.Model):
     )
     email = db.Column(db.String, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
+    phone = db.Column(db.String, nullable=False)
 
 def transaction_to_email(transaction):
     user = User.query.filter(User.user_uuid == transaction.user_uuid).first()

@@ -29,7 +29,6 @@ class User(UserMixin):
     def __init__(self, uid):
         self.id = uid
 
-
 def find_user(email):
     user = UserModel.query.filter_by(email=email).first()
     return user if user is not None else None
@@ -44,7 +43,8 @@ def register():
             new_user = UserModel(
                 user_uuid=str(uuid4()),
                 email=email,
-                password_hash=make_hash(password))
+                password_hash=make_hash(password),
+                phone=request.form.get('phone'))
             db.session.add(new_user)
             db.session.commit()
             return redirect('/login')
@@ -110,19 +110,27 @@ def logout():
 def add_transaction():
     data = request.get_json(force=True)
     store_name, location = date.sep_store_location(data.get('details'))
+    uid = str(uuid4())
     new_transaction = Transactions(
         date_of_transction=date.convert_string_to_date(
             data.get('date_of_transaction')),
         amount=data.get('amount'),
         details=data.get('details'),
-        uuid=str(uuid4()),
+        uuid=uid,
         user_uuid=data.get('user_uuid'),
         location=location,
         store_name=store_name
     )
 
+
     db.session.add(new_transaction)
     db.session.commit()
+
+    # print(ml.predict(uid))
+
+    if data.get('train') == True:
+        print('Traning model now')
+        ml.initial_train(data.get('user_uuid'))
 
     return json.dumps({
         'status': 'Success!'
@@ -132,17 +140,20 @@ def add_transaction():
 def init_predict():
     data = request.get_json(force=True)
     uid = data.get('user_uuid')
-    print("Running an initial training session.")
+    # output = queue.queue_initial_train(uid)
     ml.initial_train(uid)
+    return json.dumps({
+        'status': 'Success!'
+    })
+
+@app.route('/static/<path:path>')
+def stat(path):
+    return send_from_directory('static', path)
 
 @app.route('/')
 def index():
     return render_template('index.html')
-'''
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html')
-'''
+
 if __name__ == "__main__":
     app.run(
         host='0.0.0.0',
