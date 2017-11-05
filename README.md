@@ -1,5 +1,9 @@
 # ECHacksBack
 
+## Main
+
+- The production branch has the live code running on the AWS ec2 instances.
+
 The backend system for our ECHacks project
 
 ## Installation
@@ -10,7 +14,7 @@ The backend system for our ECHacks project
 
 ## Usage
 
-```python3 main.py```
+```python3 server.py```
 
 ## Adding code
 
