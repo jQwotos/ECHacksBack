@@ -2,6 +2,8 @@
 
 The backend system for our ECHacks project
 
+# Goto [production](https://github.com/jQwotos/ECHacksBack/tree/production) for live code
+
 ## Installation
 
 - Install python3
