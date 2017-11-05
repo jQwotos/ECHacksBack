@@ -12,5 +12,3 @@ def queue_initial_train(user_uuid):
     result = q.enqueue(
         initial_train,
         user_uuid)
-
-    

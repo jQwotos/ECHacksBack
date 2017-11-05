@@ -1,7 +1,7 @@
 import csv
 import requests
 
-user_uuid = '33409f08-5089-4b8f-af60-02293e8caac1'
+user_uuid = 'ce66622f-8c17-4d20-abad-f866809f4c90'
 
 def get_data():
     with open('test_cases.csv', 'r') as csvfile:
@@ -19,3 +19,6 @@ def submit(data):
             'details': point[2],
             'user_uuid': user_uuid}
         print(requests.post('http://127.0.0.1:4000/api/addTransaction', json=data).content)
+
+if __name__ == "__main__":
+    submit(get_data())
