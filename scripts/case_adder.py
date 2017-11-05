@@ -1,7 +1,7 @@
 import csv
 import requests
 
-user_uuid = 'ce66622f-8c17-4d20-abad-f866809f4c90'
+user_uuid = '36fe18b8-9795-40ac-94e5-63a88c838b63'
 
 def get_data():
     with open('test_cases.csv', 'r') as csvfile:

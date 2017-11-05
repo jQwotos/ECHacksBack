@@ -43,7 +43,8 @@ def register():
             new_user = UserModel(
                 user_uuid=str(uuid4()),
                 email=email,
-                password_hash=make_hash(password))
+                password_hash=make_hash(password),
+                phone=request.form.get('phone'))
             db.session.add(new_user)
             db.session.commit()
             return redirect('/login')
@@ -121,10 +122,15 @@ def add_transaction():
         store_name=store_name
     )
 
+
     db.session.add(new_transaction)
     db.session.commit()
 
     # print(ml.predict(uid))
+
+    if data.get('train') == True:
+        print('Traning model now')
+        ml.initial_train(data.get('user_uuid'))
 
     return json.dumps({
         'status': 'Success!'
@@ -140,15 +146,14 @@ def init_predict():
         'status': 'Success!'
     })
 
+@app.route('/static/<path:path>')
+def stat(path):
+    return send_from_directory('static', path)
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-'''
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html')
-'''
 if __name__ == "__main__":
     app.run(
         host='0.0.0.0',

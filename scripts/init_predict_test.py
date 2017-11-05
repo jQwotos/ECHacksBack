@@ -5,7 +5,7 @@ INIT_PREDICT_URL = "%s/initPredict" % BASE_URL
 
 def test_init_predict():
     data = {
-        'user_uuid': 'ce66622f-8c17-4d20-abad-f866809f4c90'
+        'user_uuid': '36fe18b8-9795-40ac-94e5-63a88c838b63'
     }
 
     r = requests.post(INIT_PREDICT_URL, json=data)
