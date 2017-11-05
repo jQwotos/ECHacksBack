@@ -4,7 +4,7 @@ import pandas as pd
 
 from ml import outlier, supervised
 from supports.database import Transactions
-from supports import sendgrid_api
+# from supports import sendgrid_api
 # import matplotlib.pyplot as plt
 
 from server import db
@@ -91,7 +91,7 @@ def initial_train(user_uuid):
         if outlier.predict(transaction_to_df([cache[x]]), user_uuid)[0] == -1:
             if transactions[x].fraud is None:
                 transactions[x].fraud = True
-                sendgrid_api.report(transactions[x])
+                # sendgrid_api.report(transactions[x])
                 db.session.commit()
     '''
     predictions = [
