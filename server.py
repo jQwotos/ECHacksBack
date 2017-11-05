@@ -146,6 +146,10 @@ def init_predict():
         'status': 'Success!'
     })
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
 @app.route('/static/<path:path>')
 def stat(path):
     return send_from_directory('static', path)
