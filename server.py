@@ -76,7 +76,7 @@ def request_loader(request):
     return user
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -150,12 +150,8 @@ def init_predict():
 def stat(path):
     return send_from_directory('static', path)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 if __name__ == "__main__":
     app.run(
         host='0.0.0.0',
-        port=4000,
+        port=80,
     )
