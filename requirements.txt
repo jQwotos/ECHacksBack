@@ -31,4 +31,4 @@ smart-open==1.5.3
 SQLAlchemy==1.1.15
 statsmodels==0.8.0
 urllib3==1.22
-Werkzeug==0.12.2
+Werkzeug==0.15.3
